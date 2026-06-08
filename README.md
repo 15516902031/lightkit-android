@@ -20,30 +20,33 @@
 ./gradlew :compose-ui-kit:testDebugUnitTest
 ```
 
-## 发布到 JitPack（GitHub）
+## 发布到 JitPack
 
-1. 推送本仓库到 GitHub（示例：`https://github.com/<用户>/lightkit-android`）
-2. 打版本 tag：
+### Gitee（推荐）
+
+1. 推送本仓库到 Gitee：`https://gitee.com/<用户>/lightkit-android`
+2. 打版本 tag 并推送：
 
 ```bash
 git tag 1.0.0
-git push origin 1.0.0
+git push gitee main
+git push gitee 1.0.0
 ```
 
-3. 在 [JitPack](https://jitpack.io) 触发构建：`https://jitpack.io/#<用户>/lightkit-android/1.0.0`
+3. 在 [JitPack](https://jitpack.io) 触发构建：`https://jitpack.io/#gitee.com/<用户>/lightkit-android/1.0.0`
 
 4. 业务 App 依赖：
 
 ```kotlin
-// settings.gradle.kts → repositories
 maven { url = uri("https://jitpack.io") }
 
-// app/build.gradle.kts
-implementation("com.github.<用户>.lightkit-android:retrofit-kernel:1.0.0")
-implementation("com.github.<用户>.lightkit-android:compose-ui-kit:1.0.0")
+implementation("com.gitee.<用户>.lightkit-android:retrofit-kernel:1.0.0")
+implementation("com.gitee.<用户>.lightkit-android:compose-ui-kit:1.0.0")
 ```
 
-> JitPack 多模块坐标格式：`com.github.<GitHub用户>.<仓库名>:<模块名>:<tag>`
+### GitHub（可选）
+
+坐标改为 `com.github.<用户>.lightkit-android:<模块名>:<tag>`，JitPack 地址：`https://jitpack.io/#<用户>/lightkit-android/<tag>`
 
 ## Maven Local（本机调试）
 
