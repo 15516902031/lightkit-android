@@ -48,7 +48,7 @@ import com.lightkit.compose.ui.SearchClearInputField
 | 分类 | API |
 |------|-----|
 | 主题 | `UiKitTheme`、`ProvideUiKitTheme` |
-| 间距/点击 | `Spacing`、`SpacerH/V`、`clickableWithEffect` |
+| 间距/点击 | `SpacerH/V`、`clickableWithEffect` |
 | 键盘 | `keyboardBottomInsetsPadding` |
 | 滚轮/日期 | `WheelPickerRow`、`DateWheelPickerBottomSheet`、`parseIsoDate`… |
 | 文本 | `compactTextStyle` |
@@ -97,7 +97,7 @@ ViewModel 请使用网络库提供的：
 |------|-----|
 | `groupId` | `com.lightkit` |
 | `artifactId` | `compose-ui-kit` |
-| `version` | `1.0.0` |
+| `version` | `1.1.0` |
 
 ```bash
 ./gradlew :compose-ui-kit:publishToMavenLocal

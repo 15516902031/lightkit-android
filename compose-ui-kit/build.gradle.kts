@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.lightkit"
-version = "1.0.0"
+version = "1.1.0"
 
 android {
     namespace = "com.lightkit.compose.ui"
@@ -50,15 +50,17 @@ dependencies {
     api(libs.androidx.compose.ui.graphics)
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.coil.compose) {
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.activity.compose)
+    api(libs.coil.compose) {
         exclude(group = "org.jetbrains.compose.runtime")
         exclude(group = "org.jetbrains.compose.foundation")
         exclude(group = "org.jetbrains.compose.animation")
         exclude(group = "org.jetbrains.compose.ui")
         exclude(group = "org.jetbrains.compose.material")
         exclude(group = "org.jetbrains.compose.material3")
+        exclude(group = "org.jetbrains.androidx.lifecycle")
+        exclude(group = "org.jetbrains.androidx.savedstate")
     }
 
     testImplementation(libs.junit)

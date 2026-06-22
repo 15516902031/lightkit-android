@@ -92,7 +92,7 @@ fun Modifier.clickableWithEffect(
         .pointerInput(enabled) {
             if (!enabled) return@pointerInput
             detectTapGestures(
-                onTap = { offset ->
+                onTap = { _ ->
                     // 点击后立即执行动画，动画结束后执行点击事件
                     scope.launch {
                         when (effectType) {

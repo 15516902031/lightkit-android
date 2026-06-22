@@ -2,25 +2,24 @@ package com.lightkit.compose.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * 渐变方向。
@@ -40,13 +39,11 @@ enum class GradientDirection {
 @Composable
 fun ButtonBox(
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     shape: Shape = CircleShape,
     solidColor: Color? = null,
     gradientColors: List<Color> = emptyList(),
     colorStops: List<Pair<Float, Color>>? = null,
     gradientDirection: GradientDirection = GradientDirection.Horizontal,
-    disabledAlpha: Float = 0.6f,
     minWidth: Dp = 0.dp,
     minHeight: Dp = 0.dp,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -73,7 +70,6 @@ fun ButtonBox(
             .defaultMinSize(minWidth = minWidth, minHeight = minHeight)
             .clip(shape)
             .background(brush = brush)
-            .alpha(if (enabled) 1f else disabledAlpha)
             .padding(contentPadding),
         contentAlignment = contentAlignment
     ) {
@@ -88,13 +84,11 @@ fun ButtonBox(
 fun ButtonTextBox(
     text: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     shape: Shape = CircleShape,
     solidColor: Color? = null,
     gradientColors: List<Color> = emptyList(),
     colorStops: List<Pair<Float, Color>>? = null,
     gradientDirection: GradientDirection = GradientDirection.Horizontal,
-    disabledAlpha: Float = 0.6f,
     minWidth: Dp = 0.dp,
     minHeight: Dp = 0.dp,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
@@ -104,13 +98,11 @@ fun ButtonTextBox(
 ) {
     ButtonBox(
         modifier = modifier,
-        enabled = enabled,
         shape = shape,
         solidColor = solidColor,
         gradientColors = gradientColors,
         colorStops = colorStops,
         gradientDirection = gradientDirection,
-        disabledAlpha = disabledAlpha,
         minWidth = minWidth,
         minHeight = minHeight,
         contentPadding = contentPadding,
@@ -127,7 +119,6 @@ fun ButtonTextBox(
 fun PrimaryGradientButtonTextBox(
     text: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     shape: Shape = CircleShape,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
     textColor: Color = Color.White,
@@ -137,7 +128,6 @@ fun PrimaryGradientButtonTextBox(
     ButtonTextBox(
         text = text,
         modifier = modifier,
-        enabled = enabled,
         shape = shape,
         gradientColors = listOf(theme.primaryGradientStart, theme.primaryGradientEnd),
         gradientDirection = GradientDirection.Horizontal,
@@ -153,7 +143,6 @@ fun PrimaryGradientButtonTextBox(
 @Composable
 fun PrimaryGradientButtonBox(
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     shape: Shape = CircleShape,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     contentAlignment: Alignment = Alignment.Center,
@@ -162,7 +151,6 @@ fun PrimaryGradientButtonBox(
     val theme = LocalUiKitTheme.current
     ButtonBox(
         modifier = modifier,
-        enabled = enabled,
         shape = shape,
         gradientColors = listOf(theme.primaryGradientStart, theme.primaryGradientEnd),
         gradientDirection = GradientDirection.Horizontal,
@@ -215,7 +203,6 @@ fun GradientPillButton(
 fun SecondarySolidButtonTextBox(
     text: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     shape: Shape = CircleShape,
     backgroundColor: Color? = null,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
@@ -226,7 +213,6 @@ fun SecondarySolidButtonTextBox(
     ButtonTextBox(
         text = text,
         modifier = modifier,
-        enabled = enabled,
         shape = shape,
         solidColor = backgroundColor ?: theme.secondaryButtonBackground,
         contentPadding = contentPadding,
