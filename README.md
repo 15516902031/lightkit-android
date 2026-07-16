@@ -39,7 +39,7 @@ git push origin 1.0.0
 maven { url = uri("https://jitpack.io") }
 
 implementation("com.github.15516902031.lightkit-android:retrofit-kernel:1.0.0")
-implementation("com.github.15516902031.lightkit-android:compose-ui-kit:1.1.0")
+implementation("com.github.15516902031.lightkit-android:compose-ui-kit:1.2.0")
 ```
 
 > JitPack 多模块坐标：`com.github.<GitHub用户>.<仓库名>:<模块名>:<tag>`
@@ -53,7 +53,7 @@ implementation("com.github.15516902031.lightkit-android:compose-ui-kit:1.1.0")
 ```kotlin
 mavenLocal()
 implementation("com.lightkit:retrofit-kernel:1.0.0")
-implementation("com.lightkit:compose-ui-kit:1.1.0")
+implementation("com.lightkit:compose-ui-kit:1.2.0")
 ```
 
 ## 版本升级

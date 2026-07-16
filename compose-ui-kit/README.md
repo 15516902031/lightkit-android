@@ -59,6 +59,7 @@ import com.lightkit.compose.ui.SearchClearInputField
 | 列表 | `RefreshLoadList`、`RefreshLoadGrid`、`RefreshLoadState` |
 | Tab | `TabPagerList`、`TabPagerRefreshList`、`EmptyState` |
 | 顶栏 | `CommonTopBar` |
+| 二级页基类 | `PageScaffold`、`PageUiState`、`resolvePageUiState`、`PageEmpty` / `PageError` / `PageLoading`；主题 `UiKitTheme.pageScaffold`；可选 `LocalPageEmptyContent` / `LocalPageErrorContent` |
 | 相册 | `ImagePicker`、`ImagePickerWithActions`、`ImagePickerHostConfig` |
 
 ---
@@ -97,7 +98,7 @@ ViewModel 请使用网络库提供的：
 |------|-----|
 | `groupId` | `com.lightkit` |
 | `artifactId` | `compose-ui-kit` |
-| `version` | `1.1.0` |
+| `version` | `1.2.0` |
 
 ```bash
 ./gradlew :compose-ui-kit:publishToMavenLocal

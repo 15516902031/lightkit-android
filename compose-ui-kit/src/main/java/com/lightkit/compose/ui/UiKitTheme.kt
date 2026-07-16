@@ -38,6 +38,8 @@ data class UiKitTheme(
     val imagePickerBodyColor: Color = Color(0xFF666666),
     val imagePickerMutedColor: Color = Color(0xFF999999),
     val imagePickerOptionDividerColor: Color = Color(0xFFF1F1F1),
+    /** 二级页 [PageScaffold] 默认样式与文案 */
+    val pageScaffold: PageScaffoldTheme = PageScaffoldTheme(),
 )
 
 val LocalUiKitTheme = staticCompositionLocalOf { UiKitTheme() }
