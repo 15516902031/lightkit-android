@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -80,12 +79,11 @@ internal fun ImagePickerOptionsSheet(
     val theme = imagePickerTheme()
     val strings = imagePickerStrings()
 
-    ModalBottomSheet(
+    UiKitBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         containerColor = Color.Transparent,
         shape = RoundedCornerShape(0.dp),
-        dragHandle = null,
     ) {
         Column(
             modifier = Modifier
@@ -200,12 +198,11 @@ internal fun MediaPickerSheet(
         strings.selectPhoto
     }
 
-    ModalBottomSheet(
+    UiKitBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         containerColor = Color.White,
         shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
-        dragHandle = null,
     ) {
         Column(
             modifier = Modifier

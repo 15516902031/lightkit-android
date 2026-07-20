@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,7 +35,6 @@ fun DateWheelPickerBottomSheet(
     confirmText: String = "确定",
 ) {
     val theme = LocalUiKitTheme.current
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val years = remember(minYear, maxYear) { (minYear..maxYear).map { "${it}年" } }
     val months = remember { (1..12).map { "${it}月" } }
 
@@ -61,9 +58,8 @@ fun DateWheelPickerBottomSheet(
     }
     val days = remember(selectedYear, selectedMonth, maxDay) { (1..maxDay).map { "${it}日" } }
 
-    ModalBottomSheet(
+    UiKitBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = sheetState,
         containerColor = Color.White,
     ) {
         Column(

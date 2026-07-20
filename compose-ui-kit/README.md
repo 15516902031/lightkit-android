@@ -98,7 +98,7 @@ ViewModel 请使用网络库提供的：
 |------|-----|
 | `groupId` | `com.lightkit` |
 | `artifactId` | `compose-ui-kit` |
-| `version` | `1.2.0` |
+| `version` | `1.2.1` |
 
 ```bash
 ./gradlew :compose-ui-kit:publishToMavenLocal

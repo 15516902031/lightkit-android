@@ -72,7 +72,7 @@ maven { url = uri("https://jitpack.io") }
 
 // app/build.gradle.kts
 implementation("com.github.<GitHub用户>.<仓库名>:retrofit-kernel:1.0.0")
-implementation("com.github.<GitHub用户>.<仓库名>:compose-ui-kit:1.2.0")
+implementation("com.github.<GitHub用户>.<仓库名>:compose-ui-kit:1.2.1")
 ```
 
 **Maven 本地发布（本仓库已配置 `maven-publish`）：**
@@ -88,10 +88,10 @@ mavenLocal()
 
 // app/build.gradle.kts
 implementation("com.lightkit:retrofit-kernel:1.0.0")
-implementation("com.lightkit:compose-ui-kit:1.2.0")
+implementation("com.lightkit:compose-ui-kit:1.2.1")
 ```
 
-> 远程坐标以你实际发布为准；`compose-ui-kit` 当前 `group = com.lightkit`、`version = 1.2.0`；`retrofit-kernel` 仍为 `1.0.0`。
+> 远程坐标以你实际发布为准；`compose-ui-kit` 当前 `group = com.lightkit`、`version = 1.2.1`；`retrofit-kernel` 仍为 `1.0.0`。
 
 ---
 
@@ -514,7 +514,7 @@ compose-ui-kit 的 Coil 已 exclude JetBrains Compose Multiplatform 产物。App
 | 库 | 默认版本 | 发布 |
 |----|----------|------|
 | retrofit-kernel | `1.0.0` | `com.lightkit:retrofit-kernel` / JitPack 子模块 |
-| compose-ui-kit | `1.2.0` | `com.lightkit:compose-ui-kit` / JitPack 子模块 |
+| compose-ui-kit | `1.2.1` | `com.lightkit:compose-ui-kit` / JitPack 子模块 |
 
 升级库版本后，建议执行：
 
