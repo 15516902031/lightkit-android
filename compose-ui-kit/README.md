@@ -38,7 +38,7 @@ setContent {
 ```kotlin
 import com.lightkit.compose.ui.CommonTopBar
 import com.lightkit.compose.ui.RefreshLoadList
-import com.lightkit.compose.ui.SearchClearInputField
+import com.lightkit.compose.ui.ClearableInputField
 ```
 
 ---
@@ -54,7 +54,7 @@ import com.lightkit.compose.ui.SearchClearInputField
 | 文本 | `compactTextStyle` |
 | 按钮 | `ButtonBox`、`PrimaryGradientButtonTextBox`、`GradientPillButton`… |
 | 图片 | `AppIcon`、`AppImage`、`AppAsyncImage`（Coil） |
-| 输入 | `SearchClearInputField` |
+| 输入 | `ClearableInputField` |
 | 设置/弹窗 | `SettingsSwitchRow`、`ReminderConfirmDialog`、`LockedOverlay` |
 | 列表 | `RefreshLoadList`、`RefreshLoadGrid`、`RefreshLoadState` |
 | Tab | `TabPagerList`、`TabPagerRefreshList`、`EmptyState` |
@@ -98,7 +98,7 @@ ViewModel 请使用网络库提供的：
 |------|-----|
 | `groupId` | `com.lightkit` |
 | `artifactId` | `compose-ui-kit` |
-| `version` | `1.2.1` |
+| `version` | `1.3.0` |
 
 ```bash
 ./gradlew :compose-ui-kit:publishToMavenLocal

@@ -72,7 +72,7 @@ maven { url = uri("https://jitpack.io") }
 
 // app/build.gradle.kts
 implementation("com.github.<GitHub用户>.<仓库名>:retrofit-kernel:1.0.0")
-implementation("com.github.<GitHub用户>.<仓库名>:compose-ui-kit:1.2.1")
+implementation("com.github.<GitHub用户>.<仓库名>:compose-ui-kit:1.3.0")
 ```
 
 **Maven 本地发布（本仓库已配置 `maven-publish`）：**
@@ -88,10 +88,10 @@ mavenLocal()
 
 // app/build.gradle.kts
 implementation("com.lightkit:retrofit-kernel:1.0.0")
-implementation("com.lightkit:compose-ui-kit:1.2.1")
+implementation("com.lightkit:compose-ui-kit:1.3.0")
 ```
 
-> 远程坐标以你实际发布为准；`compose-ui-kit` 当前 `group = com.lightkit`、`version = 1.2.1`；`retrofit-kernel` 仍为 `1.0.0`。
+> 远程坐标以你实际发布为准；`compose-ui-kit` 当前 `group = com.lightkit`、`version = 1.3.0`；`retrofit-kernel` 仍为 `1.0.0`。
 
 ---
 
@@ -278,7 +278,7 @@ setContent {
 import com.lightkit.compose.ui.CommonTopBar
 import com.lightkit.compose.ui.RefreshLoadList
 import com.lightkit.compose.ui.RefreshLoadState
-import com.lightkit.compose.ui.SearchClearInputField
+import com.lightkit.compose.ui.ClearableInputField
 import com.lightkit.compose.ui.SpacerV
 import com.lightkit.compose.ui.clickableWithEffect
 
@@ -286,7 +286,7 @@ import com.lightkit.compose.ui.clickableWithEffect
 fun DemoScreen() {
     Column {
         CommonTopBar(title = "标题", onBack = { /* … */ })
-        SearchClearInputField(
+        ClearableInputField(
             value = keyword,
             onValueChange = { keyword = it },
             placeholder = "搜索",
@@ -436,7 +436,7 @@ ImagePickerConfig(
 | 顶栏返回 | `CommonTopBar`（返回图标可自绘 slot） |
 | 二级页基类 | `PageScaffold` + `PageUiState` / `resolvePageUiState`；主题 `UiKitTheme.pageScaffold` |
 | 页空/错/载 | `PageEmpty`、`PageError`、`PageLoading` / `PageBlockingLoading` |
-| 搜索框 | `SearchClearInputField` |
+| 通用输入框 | `ClearableInputField` |
 | 设置页开关行 | `SettingsSwitchRow` |
 | 确认弹窗 | `ReminderConfirmDialog` |
 | 锁定蒙层 | `LockedOverlay` |
@@ -514,7 +514,7 @@ compose-ui-kit 的 Coil 已 exclude JetBrains Compose Multiplatform 产物。App
 | 库 | 默认版本 | 发布 |
 |----|----------|------|
 | retrofit-kernel | `1.0.0` | `com.lightkit:retrofit-kernel` / JitPack 子模块 |
-| compose-ui-kit | `1.2.1` | `com.lightkit:compose-ui-kit` / JitPack 子模块 |
+| compose-ui-kit | `1.3.0` | `com.lightkit:compose-ui-kit` / JitPack 子模块 |
 
 升级库版本后，建议执行：
 
