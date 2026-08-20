@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
@@ -57,12 +58,16 @@ private fun imagePickerTheme(): UiKitTheme = LocalUiKitTheme.current
 private fun imagePickerStrings(): ImagePickerStrings = LocalUiKitTheme.current.imagePickerStrings
 
 @Composable
-internal fun ImagePickerVideoBadge(modifier: Modifier = Modifier) {
+internal fun ImagePickerVideoBadge() {
     val custom = LocalImagePickerVideoBadge.current
     if (custom != null) {
         custom()
     } else {
-        Text(text = "▶", color = Color.White, fontSize = 10.sp, modifier = modifier)
+        AppIcon(
+            imageVector = Icons.Default.PlayArrow,
+            size = 10.dp,
+            tint = Color.White,
+        )
     }
 }
 
@@ -329,7 +334,6 @@ internal fun MediaPickerGridItem(
         if (frameBitmap != null) {
             AppImage(
                 bitmap = frameBitmap!!.asImageBitmap(),
-                contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
@@ -339,7 +343,6 @@ internal fun MediaPickerGridItem(
                     .data(item.uri)
                     .crossfade(true)
                     .build(),
-                contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
@@ -374,9 +377,8 @@ internal fun MediaPickerGridItem(
                 ) {
                     AppIcon(
                         imageVector = Icons.Default.CheckCircle,
-                        contentDescription = null,
+                        size = 16.dp,
                         tint = Color.White,
-                        modifier = Modifier.size(16.dp),
                     )
                 }
             } else {
@@ -399,9 +401,13 @@ internal fun MediaPickerGridItem(
                 contentAlignment = Alignment.Center,
             ) {
                 if (style == MediaPickerSheetStyle.Embedded) {
-                    ImagePickerVideoBadge(modifier = Modifier.fillMaxSize())
+                    ImagePickerVideoBadge()
                 } else {
-                    Text(text = "▶", color = Color.White, fontSize = 10.sp)
+                    AppIcon(
+                        imageVector = Icons.Default.PlayArrow,
+                        size = 10.dp,
+                        tint = Color.White,
+                    )
                 }
             }
         }

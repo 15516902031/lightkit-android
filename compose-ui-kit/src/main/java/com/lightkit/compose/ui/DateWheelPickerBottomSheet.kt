@@ -117,7 +117,6 @@ fun DateWheelPickerBottomSheet(
                             onConfirm(formatIsoDate(selectedYear, selectedMonth, dayIndex + 1))
                         },
                     ),
-                textColor = Color.White,
                 textStyle = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold),
             )
             SpacerV(12.dp)

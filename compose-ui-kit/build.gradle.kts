@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.lightkit"
-version = "1.3.0"
+version = "1.3.3"
 
 android {
     namespace = "com.lightkit.compose.ui"

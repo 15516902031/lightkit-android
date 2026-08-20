@@ -15,15 +15,15 @@ import androidx.compose.ui.unit.dp
 fun AppIcon(
     @DrawableRes resId: Int,
     modifier: Modifier = Modifier,
-    size: Dp = 22.dp,
+    /** 为 null 时完全由 [modifier] 控制尺寸（例如自定义 `Modifier.size` / `fillMaxSize`）。 */
+    size: Dp? = 22.dp,
     tint: Color = Color.Unspecified,
-    contentDescription: String? = null,
 ) {
     Icon(
         painter = painterResource(id = resId),
-        contentDescription = contentDescription,
+        contentDescription = null,
         tint = tint,
-        modifier = modifier.size(size),
+        modifier = if (size != null) modifier.size(size) else modifier,
     )
 }
 
@@ -31,14 +31,14 @@ fun AppIcon(
 fun AppIcon(
     imageVector: ImageVector,
     modifier: Modifier = Modifier,
-    size: Dp = 22.dp,
+    /** 为 null 时完全由 [modifier] 控制尺寸（例如自定义 `Modifier.size` / `fillMaxSize`）。 */
+    size: Dp? = 22.dp,
     tint: Color = Color.Unspecified,
-    contentDescription: String? = null,
 ) {
     Icon(
         imageVector = imageVector,
-        contentDescription = contentDescription,
+        contentDescription = null,
         tint = tint,
-        modifier = modifier.size(size),
+        modifier = if (size != null) modifier.size(size) else modifier,
     )
 }

@@ -30,11 +30,10 @@ enum class GradientDirection {
 }
 
 /**
- * 通用 ButtonBox：适用于按钮、Tab、标签等「Box + Text」场景。
+ * 通用 ButtonBox：适用于按钮、Tab、标签等「Box + 背景」场景。
  *
- * - 支持纯色/渐变背景
- * - 支持横向或竖向渐变
- * - 支持任意数量颜色以及可选 colorStops
+ * 外层宽高由 [modifier] 决定（不强制 fillMaxWidth）；[minWidth]/[minHeight]/[contentPadding]/[shape]
+ * 仅作样式便捷参数，也可用 modifier 的 `defaultMinSize` / `padding` / `clip` 达到同等效果。
  */
 @Composable
 fun ButtonBox(
@@ -92,7 +91,6 @@ fun ButtonTextBox(
     minWidth: Dp = 0.dp,
     minHeight: Dp = 0.dp,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
-    textColor: Color = Color.White,
     textStyle: TextStyle = TextStyle.Default,
     contentAlignment: Alignment = Alignment.Center,
 ) {
@@ -108,7 +106,7 @@ fun ButtonTextBox(
         contentPadding = contentPadding,
         contentAlignment = contentAlignment,
     ) {
-        Text(text = text, color = textColor, style = textStyle)
+        Text(text = text, style = textStyle)
     }
 }
 
@@ -121,7 +119,6 @@ fun PrimaryGradientButtonTextBox(
     modifier: Modifier = Modifier,
     shape: Shape = CircleShape,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
-    textColor: Color = Color.White,
     textStyle: TextStyle = TextStyle.Default,
 ) {
     val theme = LocalUiKitTheme.current
@@ -132,7 +129,6 @@ fun PrimaryGradientButtonTextBox(
         gradientColors = listOf(theme.primaryGradientStart, theme.primaryGradientEnd),
         gradientDirection = GradientDirection.Horizontal,
         contentPadding = contentPadding,
-        textColor = textColor,
         textStyle = textStyle,
     )
 }
@@ -161,7 +157,7 @@ fun PrimaryGradientButtonBox(
 }
 
 /**
- * 渐变胶囊按钮（全宽 Row 内常用 weight(1f)）。
+ * 渐变胶囊按钮（全宽 Row 内常用 weight(1f)；尺寸由 [modifier] 控制，不强制 fillMaxWidth）。
  */
 @Composable
 fun GradientPillButton(
@@ -171,8 +167,11 @@ fun GradientPillButton(
     gradient: Brush? = null,
     enabled: Boolean = true,
     shape: Shape = CircleShape,
-    textColor: Color = Color.White,
-    fontSize: androidx.compose.ui.unit.TextUnit = 15.sp,
+    textStyle: TextStyle = TextStyle(
+        color = Color.White,
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Medium,
+    ),
     contentPadding: PaddingValues = PaddingValues(vertical = 12.dp),
 ) {
     val theme = LocalUiKitTheme.current
@@ -187,12 +186,7 @@ fun GradientPillButton(
             .padding(contentPadding),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            text = text,
-            color = textColor,
-            fontSize = fontSize,
-            fontWeight = FontWeight.Medium,
-        )
+        Text(text = text, style = textStyle)
     }
 }
 
@@ -206,7 +200,6 @@ fun SecondarySolidButtonTextBox(
     shape: Shape = CircleShape,
     backgroundColor: Color? = null,
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
-    textColor: Color? = null,
     textStyle: TextStyle = TextStyle.Default,
 ) {
     val theme = LocalUiKitTheme.current
@@ -216,7 +209,6 @@ fun SecondarySolidButtonTextBox(
         shape = shape,
         solidColor = backgroundColor ?: theme.secondaryButtonBackground,
         contentPadding = contentPadding,
-        textColor = textColor ?: theme.secondaryButtonText,
         textStyle = textStyle,
     )
 }

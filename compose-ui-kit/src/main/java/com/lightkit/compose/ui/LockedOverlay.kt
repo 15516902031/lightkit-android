@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -16,14 +17,21 @@ import androidx.compose.ui.unit.dp
 fun BoxScope.LockedOverlay(
     iconContent: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    /** 大于 0 时裁剪圆角；需要其它 shape 时请直接在 [modifier] 上 `clip`。 */
     cornerRadius: Dp = 0.dp,
-    scrimColor: androidx.compose.ui.graphics.Color? = null,
+    scrimColor: Color? = null,
 ) {
     val theme = LocalUiKitTheme.current
     Box(
         modifier = modifier
             .matchParentSize()
-            .clip(RoundedCornerShape(cornerRadius))
+            .then(
+                if (cornerRadius > 0.dp) {
+                    Modifier.clip(RoundedCornerShape(cornerRadius))
+                } else {
+                    Modifier
+                },
+            )
             .background(scrimColor ?: theme.lockedOverlayScrim),
         contentAlignment = Alignment.Center,
     ) {

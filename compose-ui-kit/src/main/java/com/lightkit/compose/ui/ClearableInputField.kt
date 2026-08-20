@@ -1,14 +1,11 @@
 package com.lightkit.compose.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,20 +14,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
  * 通用可清空输入框（搜索、表单、多行等场景均可）。
  *
+ * 外层尺寸 / 背景 / 圆角 / padding 一律由 [modifier] 控制，组件内部不再强制
+ * `fillMaxWidth`、固定高度或容器样式。例如：
+ * - 全宽搜索条：`Modifier.fillMaxWidth().height(42.dp).clip(...).background(...).padding(...)`
+ * - 宽度随内容：`Modifier.wrapContentWidth().height(42.dp).padding(...)`
+ *
  * - [trailingContent]：常驻尾部（如字数统计），不受清空按钮逻辑影响
  * - [clearContent]：有内容时可选的清空入口
  * - 多行时用 [singleLine]=false + [minLines]/[maxLines] + [contentAlignment]=[Alignment.TopStart]
+ * - [centerContentWhenEmpty]：空态时 leading + 占位文案作为一组水平居中（常见搜索框样式）
  */
 @Composable
 fun ClearableInputField(
@@ -53,16 +52,10 @@ fun ClearableInputField(
     trailingAlignment: Alignment = Alignment.CenterEnd,
     clearContent: (@Composable (onClear: () -> Unit) -> Unit)? = null,
     showClearWhenNotEmpty: Boolean = true,
-    iconSize: Dp = 16.dp,
     textStyle: TextStyle? = null,
     placeholderTextStyle: TextStyle? = null,
-    shape: Shape = RoundedCornerShape(21.dp),
-    containerColor: Color? = null,
-    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp),
-    minHeight: Dp = 42.dp,
-    maxHeight: Dp? = null,
-    fillMaxWidth: Boolean = true,
     contentAlignment: Alignment = Alignment.CenterStart,
+    centerContentWhenEmpty: Boolean = false,
 ) {
     val theme = LocalUiKitTheme.current
     val resolvedTextStyle = textStyle ?: LocalTextStyle.current.merge(
@@ -70,7 +63,6 @@ fun ClearableInputField(
     )
     val resolvedPlaceholderStyle = placeholderTextStyle
         ?: compactTextStyle(fontSize = 14.sp, color = theme.searchFieldPlaceholder)
-    val resolvedContainerColor = containerColor ?: theme.searchFieldBackground
     val overlayTrailing = trailingContent != null && isOverlayTrailing(trailingAlignment)
     val rowVerticalAlignment = when {
         isTopAlignment(contentAlignment) -> Alignment.Top
@@ -79,47 +71,27 @@ fun ClearableInputField(
     }
     val resolvedMinLines = if (singleLine) 1 else minLines.coerceAtLeast(1)
     val resolvedMaxLines = if (singleLine) 1 else maxLines.coerceAtLeast(resolvedMinLines)
+    val centerEmpty = centerContentWhenEmpty && value.isBlank()
 
     fun adaptValue(input: String): String {
         val filtered = valueFilter?.invoke(input) ?: input
         return maxLength?.let { filtered.take(it) } ?: filtered
     }
 
-    Box(
-        modifier = modifier
-            .then(if (fillMaxWidth) Modifier.fillMaxWidth() else Modifier)
-            .then(
-                when {
-                    singleLine && maxHeight == null -> Modifier.height(minHeight)
-                    maxHeight != null -> Modifier.heightIn(min = minHeight, max = maxHeight)
-                    else -> Modifier.heightIn(min = minHeight)
-                },
-            )
-            .clip(shape)
-            .background(resolvedContainerColor)
-            .padding(contentPadding),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = rowVerticalAlignment,
-        ) {
-            if (leadingContent != null) {
-                leadingContent()
-                SpacerH(8.dp)
-            }
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(
-                        end = if (overlayTrailing) 8.dp else 0.dp,
-                        bottom = if (overlayTrailing && isBottomAlignment(trailingAlignment)) {
-                            18.dp
-                        } else {
-                            0.dp
-                        },
-                    ),
-                contentAlignment = contentAlignment,
+    BoxWithConstraints(modifier = modifier) {
+        // 仅在外层给出固定宽/高时再撑满，避免写死 fillMaxWidth 导致无法 wrapContent
+        val expandWidth = constraints.hasFixedWidth
+        val expandHeight = constraints.hasFixedHeight
+
+        if (centerEmpty) {
+            Row(
+                modifier = Modifier.align(Alignment.Center),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
+                if (leadingContent != null) {
+                    leadingContent()
+                    SpacerH(8.dp)
+                }
                 BasicTextField(
                     value = value,
                     onValueChange = { onValueChange(adaptValue(it)) },
@@ -132,26 +104,81 @@ fun ClearableInputField(
                     keyboardOptions = keyboardOptions,
                     keyboardActions = keyboardActions,
                     decorationBox = { innerTextField ->
-                        if (value.isBlank() && placeholder.isNotBlank()) {
-                            Text(
-                                text = placeholder,
-                                style = resolvedPlaceholderStyle,
-                                modifier = Modifier.matchParentSize(),
-                            )
+                        Box {
+                            if (placeholder.isNotBlank()) {
+                                Text(
+                                    text = placeholder,
+                                    style = resolvedPlaceholderStyle,
+                                )
+                            }
+                            innerTextField()
                         }
-                        innerTextField()
                     },
-                    modifier = Modifier.fillMaxWidth(),
                 )
             }
-            if (trailingContent != null && !overlayTrailing) {
-                SpacerH(8.dp)
-                trailingContent()
-            }
-            if (showClearWhenNotEmpty && value.isNotEmpty() && clearContent != null) {
-                SpacerH(8.dp)
-                clearContent {
-                    if (value.isNotEmpty()) onValueChange("")
+        } else {
+            Row(
+                modifier = Modifier
+                    .then(if (expandWidth) Modifier.fillMaxWidth() else Modifier)
+                    .then(if (expandHeight) Modifier.fillMaxHeight() else Modifier)
+                    .align(Alignment.CenterStart),
+                verticalAlignment = rowVerticalAlignment,
+            ) {
+                if (leadingContent != null) {
+                    leadingContent()
+                    SpacerH(8.dp)
+                }
+                Box(
+                    modifier = Modifier
+                        .then(if (expandWidth) Modifier.weight(1f) else Modifier)
+                        .then(if (expandHeight) Modifier.fillMaxHeight() else Modifier)
+                        .padding(
+                            end = if (overlayTrailing) 8.dp else 0.dp,
+                            bottom = if (overlayTrailing && isBottomAlignment(trailingAlignment)) {
+                                18.dp
+                            } else {
+                                0.dp
+                            },
+                        ),
+                    contentAlignment = contentAlignment,
+                ) {
+                    BasicTextField(
+                        value = value,
+                        onValueChange = { onValueChange(adaptValue(it)) },
+                        enabled = enabled,
+                        readOnly = readOnly,
+                        singleLine = singleLine,
+                        minLines = resolvedMinLines,
+                        maxLines = resolvedMaxLines,
+                        textStyle = resolvedTextStyle,
+                        keyboardOptions = keyboardOptions,
+                        keyboardActions = keyboardActions,
+                        decorationBox = { innerTextField ->
+                            // 占位与输入同起点叠放，避免 CenterStart 导致占位垂直居中、正文贴顶错位
+                            Box(
+                                modifier = if (expandWidth) Modifier.fillMaxWidth() else Modifier,
+                            ) {
+                                if (value.isBlank() && placeholder.isNotBlank()) {
+                                    Text(
+                                        text = placeholder,
+                                        style = resolvedPlaceholderStyle,
+                                    )
+                                }
+                                innerTextField()
+                            }
+                        },
+                        modifier = if (expandWidth) Modifier.fillMaxWidth() else Modifier,
+                    )
+                }
+                if (trailingContent != null && !overlayTrailing) {
+                    SpacerH(8.dp)
+                    trailingContent()
+                }
+                if (showClearWhenNotEmpty && value.isNotEmpty() && clearContent != null) {
+                    SpacerH(8.dp)
+                    clearContent {
+                        if (value.isNotEmpty()) onValueChange("")
+                    }
                 }
             }
         }
@@ -173,8 +200,8 @@ fun ClearableInputField(
             "value, onValueChange, modifier, placeholder, enabled, readOnly, singleLine, " +
             "minLines, maxLines, maxLength, valueFilter, keyboardOptions, keyboardActions, " +
             "leadingContent, trailingContent, trailingAlignment, clearContent, " +
-            "showClearWhenNotEmpty, iconSize, textStyle, placeholderTextStyle, shape, " +
-            "containerColor, contentPadding, minHeight, maxHeight, fillMaxWidth, contentAlignment)",
+            "showClearWhenNotEmpty, textStyle, placeholderTextStyle, " +
+            "contentAlignment, centerContentWhenEmpty)",
         imports = ["com.lightkit.compose.ui.ClearableInputField"],
     ),
 )
@@ -198,16 +225,10 @@ fun SearchClearInputField(
     trailingAlignment: Alignment = Alignment.CenterEnd,
     clearContent: (@Composable (onClear: () -> Unit) -> Unit)? = null,
     showClearWhenNotEmpty: Boolean = true,
-    iconSize: Dp = 16.dp,
     textStyle: TextStyle? = null,
     placeholderTextStyle: TextStyle? = null,
-    shape: Shape = RoundedCornerShape(21.dp),
-    containerColor: Color? = null,
-    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp),
-    minHeight: Dp = 42.dp,
-    maxHeight: Dp? = null,
-    fillMaxWidth: Boolean = true,
     contentAlignment: Alignment = Alignment.CenterStart,
+    centerContentWhenEmpty: Boolean = false,
 ) {
     ClearableInputField(
         value = value,
@@ -228,16 +249,10 @@ fun SearchClearInputField(
         trailingAlignment = trailingAlignment,
         clearContent = clearContent,
         showClearWhenNotEmpty = showClearWhenNotEmpty,
-        iconSize = iconSize,
         textStyle = textStyle,
         placeholderTextStyle = placeholderTextStyle,
-        shape = shape,
-        containerColor = containerColor,
-        contentPadding = contentPadding,
-        minHeight = minHeight,
-        maxHeight = maxHeight,
-        fillMaxWidth = fillMaxWidth,
         contentAlignment = contentAlignment,
+        centerContentWhenEmpty = centerContentWhenEmpty,
     )
 }
 

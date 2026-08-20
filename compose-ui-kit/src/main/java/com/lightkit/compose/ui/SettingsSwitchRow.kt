@@ -39,6 +39,7 @@ fun SettingsSwitchRow(
     val resolvedTipStyle = tipTextStyle ?: compactTextStyle(fontSize = 9.sp, color = theme.settingsTipColor)
 
     Row(
+        // 设置行默认占满行宽；标题区 weight 需要有界宽度
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
