@@ -439,7 +439,7 @@ ImagePickerConfig(
 | 防连点 / 涟漪点击 | `Modifier.clickableWithEffect` |
 | 键盘顶起留白 | `Modifier.keyboardBottomInsetsPadding()` |
 | 紧凑文字样式 | `compactTextStyle` |
-| 主色渐变按钮 | `PrimaryGradientButtonTextBox`、`GradientPillButton` |
+| 主色渐变按钮 | `PrimaryButton`（主 CTA + loading）、`GradientPillButton`、`PrimaryGradientButtonTextBox`（无点击） |
 | 顶栏返回 | `CommonTopBar`（返回图标可自绘 slot） |
 | 二级页基类 | `PageScaffold` + `PageUiState` / `resolvePageUiState`；主题 `UiKitTheme.pageScaffold` |
 | 页空/错/载 | `PageEmpty`、`PageError`、`PageLoading` / `PageBlockingLoading` |

@@ -111,7 +111,9 @@ fun ButtonTextBox(
 }
 
 /**
- * 项目常用粉紫渐变按钮（文本版）。
+ * 项目常用粉紫渐变按钮（文本版，无点击）。
+ *
+ * 可点击的主 CTA 请用 [PrimaryButton]。
  */
 @Composable
 fun PrimaryGradientButtonTextBox(

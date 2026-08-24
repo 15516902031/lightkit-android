@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 /**
  * 可复用 UI 组件的默认文案与颜色；业务 App 在根节点通过 [ProvideUiKitTheme] 覆盖。
@@ -20,6 +22,16 @@ data class UiKitTheme(
     val topBarContentColor: Color = Color.Black,
     val primaryGradientStart: Color = Color(0xFFFF97EF),
     val primaryGradientEnd: Color = Color(0xFFFF65E8),
+    /** [PrimaryButton] 文案色 */
+    val primaryButtonTextColor: Color = Color.White,
+    /** [PrimaryButton] loading 指示器色 */
+    val primaryButtonLoadingIndicatorColor: Color = Color.White,
+    /** [PrimaryButton] disabled 且非 loading 时的 alpha */
+    val primaryButtonDisabledAlpha: Float = 0.5f,
+    /** [PrimaryButton] 默认高度 */
+    val primaryButtonDefaultHeight: Dp = 48.dp,
+    /** [PrimaryButton] 全宽 CTA 两侧留白（[fillMaxWidth] 内侧） */
+    val primaryButtonHorizontalInset: Dp = 80.dp,
     val secondaryButtonBackground: Color = Color(0xFFF7F8FB),
     val secondaryButtonText: Color = Color(0xFF24292C),
     val searchFieldBackground: Color = Color(0xFFF3F3F7),

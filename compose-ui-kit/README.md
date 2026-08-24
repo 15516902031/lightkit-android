@@ -52,7 +52,7 @@ import com.lightkit.compose.ui.ClearableInputField
 | 键盘 | `keyboardBottomInsetsPadding` |
 | 滚轮/日期 | `WheelPickerRow`、`DateWheelPickerBottomSheet`、`parseIsoDate`… |
 | 文本 | `compactTextStyle` |
-| 按钮 | `ButtonBox`、`PrimaryGradientButtonTextBox`、`GradientPillButton`… |
+| 按钮 | `PrimaryButton`（主 CTA + loading）、`GradientPillButton`、`ButtonBox`、`PrimaryGradientButtonTextBox`… |
 | 图片 | `AppIcon`、`AppImage`、`AppAsyncImage`（Coil） |
 | 输入 | `ClearableInputField`（宽高/背景/圆角走 `modifier`，不强制全宽） |
 | 设置/弹窗 | `SettingsSwitchRow`、`ReminderConfirmDialog`、`LockedOverlay` |
@@ -98,7 +98,7 @@ ViewModel 请使用网络库提供的：
 |------|-----|
 | `groupId` | `com.lightkit` |
 | `artifactId` | `compose-ui-kit` |
-| `version` | `1.3.3` |
+| `version` | `1.4.0` |
 
 ```bash
 ./gradlew :compose-ui-kit:publishToMavenLocal
